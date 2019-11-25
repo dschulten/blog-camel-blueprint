@@ -35,12 +35,12 @@ public class MyRouteTest extends CamelTestSupport {
     public static Option[] configure() throws Exception {
         return new Option[] {
                 karafDistributionConfiguration()
-                        .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf").type("tar.gz").version("2.3.6"))
-                        .karafVersion("2.3.6")
+                        .frameworkUrl(maven().groupId("org.apache.karaf").artifactId("apache-karaf").type("tar.gz").version("4.2.7"))
+                        .karafVersion("4.2.7")
                         .useDeployFolder(false)
                         .unpackDirectory(new File("target/paxexam/unpack")),
                 logLevel(LogLevelOption.LogLevel.WARN),
-                features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel").type("xml").classifier("features").version("2.12.1"), "camel-blueprint", "camel-test"),
+                features(maven().groupId("org.apache.camel.karaf").artifactId("apache-camel").type("xml").classifier("features").version("2.24.2"), "camel-blueprint", "camel-test"),
                 features(maven().groupId("net.nanthrax.blog").artifactId("camel-blueprint").type("xml").classifier("features").version("1.0-SNAPSHOT"), "blog-camel-blueprint-route"),
                 keepRuntimeFolder()
         };
