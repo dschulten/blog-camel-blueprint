@@ -12,6 +12,7 @@
 
     <properties>
         <pax.exam.version>4.13.1</pax.exam.version>
+        <karaf.version>4.2.7</karaf.version>
     </properties>
 
     <artifactId>itests</artifactId>
@@ -22,6 +23,14 @@
             <groupId>net.nanthrax.blog</groupId>
             <artifactId>camel-blueprint</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.karaf</groupId>
+            <artifactId>apache-camel</artifactId>
+            <version>${camel.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>test</scope>
@@ -56,8 +65,8 @@
         <!-- Camel Test -->
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-test</artifactId>
-            <version>2.24.2</version>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -65,7 +74,7 @@
         <dependency>
             <groupId>org.apache.karaf</groupId>
             <artifactId>apache-karaf</artifactId>
-            <version>4.2.7</version>
+            <version>${karaf.version}</version>
             <type>tar.gz</type>
             <scope>test</scope>
             <exclusions>
@@ -87,7 +96,76 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Karaf Test -->
+        <dependency>
+            <groupId>org.apache.karaf.itests</groupId>
+            <artifactId>common</artifactId>
+            <version>${karaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>3.1.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.hamcrest</artifactId>
+            <version>1.3_1</version>
+            <scope>runtime</scope>
+        </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.servicemix.tooling</groupId>
+                <artifactId>depends-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-depends-file</id>
+                        <goals>
+                            <goal>generate-depends-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                    <systemPropertyVariables>
+                        <spring31.version>3.1.4.RELEASE</spring31.version>
+                        <spring32.version>3.2.18.RELEASE_1</spring32.version>
+                        <spring40.version>4.0.9.RELEASE_1</spring40.version>
+                        <spring41.version>4.1.9.RELEASE_1</spring41.version>
+                        <spring42.version>4.2.9.RELEASE_1</spring42.version>
+                        <spring43.version>4.3.25.RELEASE_1</spring43.version>
+                        <spring50.version>5.0.15.RELEASE_1</spring50.version>
+                        <spring51.version>5.1.9.RELEASE_1</spring51.version>
+                        <spring52.version>5.2.0.RELEASE_1</spring52.version>
+                        <spring.security31.version>3.1.4.RELEASE</spring.security31.version>
+                        <spring.security42.version>4.2.4.RELEASE_1</spring.security42.version>
+                        <spring.security51.version>5.1.5.RELEASE_1</spring.security51.version>
+
+                        <activemq.version>5.15.10</activemq.version>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
